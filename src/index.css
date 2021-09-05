@@ -5,6 +5,8 @@ body {
   font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #FCFCFC;
+  color: #2C2C2C;
 }
 
 /* code {
