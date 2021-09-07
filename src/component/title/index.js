@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import color from "../../utility/color";
 const Title = (props) => {
+
   return (
     <Fragment>
       <div className="space">

@@ -7,14 +7,24 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch, useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import NotFound from "../notfound";
 import Dashboard from "./pagesAdmin/dashboard";
 import Dataset from "./pagesAdmin/dataset";
+import Detail from "./pagesAdmin/detail";
+import Pelatihan from "./pagesAdmin/pelatihan";
+import Pengujian from "./pagesAdmin/pengujian";
 import "./style.css";
 
 const Admin = () => {
+
+  const history = useHistory();
+
+  const HandleLogout = () => {
+      history.push("../login");
+  }
+
   const urlAdmin = [
     {
       name: "Dashboard",
@@ -31,13 +41,13 @@ const Admin = () => {
     {
       name: "Hasil Pelatihan",
       link: "/hasil-pelatihan",
-      route: <div>ini Hasil Pelatihan</div>,
+      route: <Pelatihan />,
       icon: faTable,
     },
     {
       name: "Hasil Pengujian",
       link: "/hasil-pengujian",
-      route: <div>ini Hasil Pengujian</div>,
+      route: <Pengujian />,
       icon: faTasks,
     },
   ];
@@ -89,28 +99,35 @@ const Admin = () => {
                   marginBottom: 15,
                 }}
               >
-                <Link className="menu-list" to="/">
+                <div style={{
+                  cursor: "pointer"
+                }} className="menu-list" onClick={()=>HandleLogout()} >
                   <FontAwesomeIcon
                     icon={faSignOutAlt}
                     size="lg"
                     className="mx-3"
                   />
                   <span className="not-mobile">Logout</span>
-                </Link>
+                </div>
               </li>
             </ul>
           </div>
         </div>
+        <div className="margin-main" />
         <div className="admin-main">
           <Switch>
             {urlAdmin.map((element) =>
               element.link === "/" ? (
-                <Route path={element.link} exact>{element.route}</Route>
+                <Route path={element.link} exact>
+                  {element.route}
+                </Route>
               ) : (
                 <Route path={element.link}>{element.route}</Route>
               )
             )}
-
+            <Route path="/detail">
+              <Detail/>
+            </Route>
             <Route path="*">
               <NotFound link="/" />
             </Route>

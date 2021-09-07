@@ -3,6 +3,9 @@ import { Card } from "react-bootstrap";
 import color from "../../utility/color";
 
 const CardDashboard = (props) => {
+
+  const {title, body} = props;
+
   return (
     <Card
       style={{
@@ -19,7 +22,7 @@ const CardDashboard = (props) => {
           fontWeight: 400,
         }}
       >
-        {props.title}
+        {title}
       </Card.Title>
       <Card.Body
         style={{
@@ -28,7 +31,7 @@ const CardDashboard = (props) => {
         }}
         className="m-1"
       >
-        {props.body}
+        {body}
       </Card.Body>
     </Card>
   );

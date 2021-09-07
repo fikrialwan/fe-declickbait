@@ -1,13 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import color from "../../utility/color";
 
 const CustomButton = (props) => {
+  const { onClick, title, bgColor, textColor, className, link, isLink } = props;
   return (
-    <div className="mx-1">
-      <Link to={props.link} style={{
-          color:color.white
-      }} >{props.title}</Link>
+    <div
+      style={{
+        marginRight: 15,
+      }}
+    >
+      {isLink ? (
+        <Link
+          // onClick={() => onClick ?? null}
+          to={link}
+          className={`btn ${className}`}
+          style={{
+            boxShadow: "none",
+            outline: 0,
+            backgroundColor: bgColor,
+            color: textColor,
+          }}
+        >
+          {title}
+        </Link>
+      ) : (
+        <div
+          onClick={() => onClick ?? null}
+          className={`btn ${className}`}
+          style={{
+            boxShadow: "none",
+            outline: 0,
+            backgroundColor: bgColor,
+            color: textColor,
+          }}
+        >
+          {title}
+        </div>
+      )}
     </div>
   );
 };
