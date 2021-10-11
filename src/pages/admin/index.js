@@ -6,8 +6,13 @@ import {
   faTasks,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { Route, BrowserRouter as Router, Switch, useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  useHistory,
+} from "react-router-dom";
 import { Link } from "react-router-dom";
 import NotFound from "../notfound";
 import Dashboard from "./pagesAdmin/dashboard";
@@ -18,12 +23,20 @@ import Pengujian from "./pagesAdmin/pengujian";
 import "./style.css";
 
 const Admin = () => {
-
+  
   const history = useHistory();
 
+  useEffect(() => {
+    const user = localStorage.getItem("user") ?? 0;
+    if(user === 0){
+      history.push('../login');
+    }
+  });
+
   const HandleLogout = () => {
-      history.push("../login");
-  }
+    localStorage.removeItem('user');
+    history.push("../login");
+  };
 
   const urlAdmin = [
     {
@@ -72,8 +85,9 @@ const Admin = () => {
                 margin: 0,
               }}
             >
-              {urlAdmin.map((element) => (
+              {urlAdmin.map((element, index) => (
                 <li
+                  key={index}
                   style={{
                     listStyleType: "none",
                     padding: 0,
@@ -92,6 +106,7 @@ const Admin = () => {
                 </li>
               ))}
               <li
+                 key={99}
                 style={{
                   listStyleType: "none",
                   padding: 0,
@@ -99,9 +114,13 @@ const Admin = () => {
                   marginBottom: 15,
                 }}
               >
-                <div style={{
-                  cursor: "pointer"
-                }} className="menu-list" onClick={()=>HandleLogout()} >
+                <div
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  className="menu-list"
+                  onClick={() => HandleLogout()}
+                >
                   <FontAwesomeIcon
                     icon={faSignOutAlt}
                     size="lg"
@@ -116,19 +135,19 @@ const Admin = () => {
         <div className="margin-main" />
         <div className="admin-main">
           <Switch>
-            {urlAdmin.map((element) =>
+            {urlAdmin.map((element, index) =>
               element.link === "/" ? (
-                <Route path={element.link} exact>
+                <Route key={index} path={element.link} exact>
                   {element.route}
                 </Route>
               ) : (
-                <Route path={element.link}>{element.route}</Route>
+                <Route key={99} path={element.link}>{element.route}</Route>
               )
             )}
-            <Route path="/detail">
-              <Detail/>
+            <Route key={100} path="/detail">
+              <Detail />
             </Route>
-            <Route path="*">
+            <Route key={101} path="*">
               <NotFound link="/" />
             </Route>
           </Switch>

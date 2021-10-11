@@ -6,37 +6,38 @@ import services from "../../process/service";
 import { useResetRecoilState } from "recoil";
 import { getDataset, getDatatest, getDatatrain } from "../../state";
 
-const TambahModal = () => {
+const TambahExcel = () => {
   const [show, setShow] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isProses, setIsProses] = useState(false);
 
-  const [judulBerita, setJudulBerita] = useState("");
+  const [dataFile, setDataFile] = useState();
   const [sumberBerita, setSumberBerita] = useState("");
-  const [statusData, setStatusData] = useState("");
-  const [label, setLabel] = useState("");
   const idAdmin = localStorage.getItem("user") ?? 0;
 
-  
   const setDatasetState = useResetRecoilState(getDataset);
   const setDatatrainState = useResetRecoilState(getDatatrain);
   const setDatatestState = useResetRecoilState(getDatatest);
 
   const handleAddBerita = async () => {
+    setIsProses(true);
+    const data = new FormData();
+    data.append("data", dataFile);
+    data.append("sumberBerita", sumberBerita);
+    data.append("idAdmin", idAdmin);
     await services
-      .postBerita({
-        judulBerita,
-        sumberBerita,
-        statusData,
-        label,
-        idAdmin,
-      })
+      .postBeritaExcel(data)
       .then((result) => {
         handleClose();
-        setDatatrainState();
-        setDatatestState();
-        setDatasetState();
+        setDatatrainState(true);
+        setDatatestState(true);
+        setDatasetState(true);
+        setIsProses(false);
       })
-      .catch((error) => setIsError(true));
+      .catch((error) => {
+        setIsError(true);
+        setIsProses(false);
+      });
   };
 
   const handleClose = () => {
@@ -48,7 +49,7 @@ const TambahModal = () => {
     <Fragment>
       <div onClick={() => handleShow()}>
         <CustomButton
-          title="Tambah Data"
+          title="Tambah Data With Excel"
           bgColor={color.red}
           textColor={color.gray}
         />
@@ -67,6 +68,7 @@ const TambahModal = () => {
           <Form>
             <Form.Group className="mb-3">
               <Form.Control
+                type="file"
                 placeholder="Judul"
                 style={{
                   borderColor: color.black,
@@ -74,7 +76,9 @@ const TambahModal = () => {
                   outline: 0,
                   boxShadow: "none",
                 }}
-                onChange={(value) => setJudulBerita(value.target.value)}
+                onChange={(value) => {
+                  setDataFile(value.target.files[0]);
+                }}
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -89,45 +93,13 @@ const TambahModal = () => {
                 onChange={(value) => setSumberBerita(value.target.value)}
               />
             </Form.Group>
-            <Form.Group>
-              <Form.Select
-                className="mb-3"
-                style={{
-                  borderColor: color.black,
-                  opacity: 0.5,
-                  outline: 0,
-                  boxShadow: "none",
-                }}
-                onChange={(value) => setStatusData(value.target.value)}
-              >
-                <option hidden>Masukkan keterangan data</option>
-                <option value="train">Data Train</option>
-                <option value="test">Data Test</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group>
-              <Form.Select
-                className="mb-3"
-                style={{
-                  borderColor: color.black,
-                  opacity: 0.5,
-                  outline: 0,
-                  boxShadow: "none",
-                }}
-                onChange={(value) => setLabel(value.target.value)}
-              >
-                <option hidden>Masukkan label data</option>
-                <option value="Clickbait">Clickbait</option>
-                <option value="Bukan Clickbait">Bukan Clickbait</option>
-              </Form.Select>
-            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <div onClick={handleAddBerita}>
             <CustomButton
-              title="Tambah"
-              bgColor={color.red}
+              title={isProses ? "Loading..." : "Tambah"}
+              bgColor={isProses ? "#808080" : color.red}
               textColor={color.gray}
               className="col-md-12"
             />
@@ -138,4 +110,4 @@ const TambahModal = () => {
   );
 };
 
-export default TambahModal;
+export default TambahExcel;

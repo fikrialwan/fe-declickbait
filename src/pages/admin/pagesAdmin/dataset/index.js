@@ -7,11 +7,22 @@ import TableAll from "./type/all";
 import TableTrain from "./type/train";
 import TableTest from "./type/test";
 import TambahModal from "../../../../component/tambahModal";
+import TambahExcel from "../../../../component/tambahExcel";
+import CustomButton from "../../../../component/customButton";
+import color from "../../../../utility/color";
+import services from "../../../../process/service";
+import { useResetRecoilState } from "recoil";
+import { getDataset, getDatatest, getDatatrain } from "../../../../state";
 
 const useQuery = () => new URLSearchParams(useLocation().search);
 
 const Dataset = () => {
   const query = useQuery();
+
+  
+  const setDatasetState = useResetRecoilState(getDataset);
+  const setDatatrainState = useResetRecoilState(getDatatrain);
+  const setDatatestState = useResetRecoilState(getDatatest);
 
   const buttonData = [
     {
@@ -28,20 +39,38 @@ const Dataset = () => {
     },
   ];
 
+  const handleDelete = () => {
+    services.deleteAllBerita().then((_) => {
+      setDatasetState();
+      setDatatestState();
+      setDatatrainState();
+    })
+  }
+
   return (
     <Container>
       <Title title="Dataset" />
       <div style={{ display: "flex", marginBottom: 20 }}>
-        {buttonData.map((e) => (
-          <TypeButton title={e.title} param={query.get("type")} />
+        {buttonData.map((e, index) => (
+          <TypeButton key={index} title={e.title} param={query.get("type")} />
         ))}
       </div>
-      <TambahModal/>
-      {buttonData.map((e) =>
+      <div style={{ display: "flex", marginBottom: 20 }}>
+        <TambahModal />
+        <TambahExcel />
+        <div className="mb-1" onClick={() => handleDelete()}>
+          <CustomButton
+            title="Delete All Berita"
+            textColor={color.gray}
+            bgColor={color.red}
+          />
+        </div>
+      </div>
+      {buttonData.map((e, index) =>
         e.title.toLowerCase() === (query.get("type") ?? "all") ? (
-          e.component
+          <div key={index}>{e.component}</div>
         ) : (
-          <div />
+          <div key={index} />
         )
       )}
     </Container>

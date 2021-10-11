@@ -1,16 +1,40 @@
-import React from "react";
-import { Container } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Modal } from "react-bootstrap";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import CardDashboard from "../../../../component/cardDashbord";
 import CustomButton from "../../../../component/customButton";
 import TableData from "../../../../component/table";
 import Title from "../../../../component/title";
-import dataset, { defaultSortedDataset } from "../../../../dummy/dataset";
+import { defaultSortedDataset } from "../../../../dummy/dataset";
+import services from "../../../../process/service";
+import { getCommons, getDatatrain } from "../../../../state";
 import color from "../../../../utility/color";
+import loading from "../../../../assets/svg/loading.svg";
 
 const Pelatihan = () => {
+  const data = useRecoilValue(getDatatrain);
+  const resetData = useResetRecoilState(getDatatrain);
+  const resetCommons = useResetRecoilState(getCommons);
+  const [isProses, setIsProses] = useState(false);
+
+  const { w_unik, w_total_clickbait, w_total_not_clickbait } =
+    useRecoilValue(getCommons);
+
+  const trainProses = async () => {
+    setIsProses(true);
+    try {
+      await services.train();
+      setIsProses(false);
+      resetData();
+      resetCommons();
+    } catch (_) {
+      setIsProses(false);
+    }
+  };
+
   const columns = [
     {
-      dataField: "judul",
+      dataField: "judul_berita",
       text: "Judul",
       sort: true,
       headerStyle: {
@@ -20,7 +44,7 @@ const Pelatihan = () => {
       },
     },
     {
-      dataField: "sumber",
+      dataField: "sumber_berita",
       text: "Sumber",
       sort: true,
       headerStyle: {
@@ -38,7 +62,7 @@ const Pelatihan = () => {
         border: "none",
       },
       formatter: (_, row) => {
-        const { judul } = row;
+        const { id } = row;
         return (
           <div className="mb-1">
             <CustomButton
@@ -46,7 +70,7 @@ const Pelatihan = () => {
               textColor={color.gray}
               bgColor={color.red}
               isLink={true}
-              link={`/detail?judul=${judul}`}
+              link={`/detail?beritaid=${id}`}
             />
           </div>
         );
@@ -56,26 +80,67 @@ const Pelatihan = () => {
   return (
     <Container>
       <Title title="Hasil Pelatihan" />
-      <CustomButton
-        title="Mulai Pelatihan"
-        bgColor={color.red}
-        textColor={color.gray}
-      />
+      <div
+        onClick={() => {
+          if (!isProses) trainProses();
+        }}
+      >
+        <CustomButton
+          title={isProses ? "Proses..." : "Mulai Pelatihan"}
+          bgColor={isProses ? color.white : color.red}
+          textColor={isProses ? color.red : color.gray}
+        />
+      </div>
+      <Modal
+        show={isProses}
+        onHide={() => setIsProses(false)}
+        backdrop="static"
+      >
+        <Modal.Body>
+          <div className="row">
+            <div className="col-md-2" />
+            <img
+              src={loading}
+              alt="img-not-found"
+              className="p-2 col-md-8"
+              // width="100%"
+              // height="auto"
+            />
+            <div className="col-md-2" />
+          </div>
+          <p
+            style={{
+              fontSize: 30,
+              textAlign: "center",
+              padding: 10,
+            }}
+          >
+            Proses....
+          </p>
+        </Modal.Body>
+      </Modal>
       <div className="row mb-2">
         <div className="col-md-4 p-2">
-          <CardDashboard title="Total W pada kelas Clickbait" body="0.523" />
+          <CardDashboard
+            title="Total W pada kelas Clickbait"
+            body={w_total_clickbait.toFixed(5)}
+          />
         </div>
         <div className="col-md-4 p-2">
           <CardDashboard
             title="Total W pada kelas bukan Clickbait"
-            body="0.321"
+            body={w_total_not_clickbait.toFixed(5)}
           />
         </div>
         <div className="col-md-4 p-2">
-          <CardDashboard title="Total IDF" body="0.932" />
+          <CardDashboard title="Total IDF" body={w_unik.toFixed(5)} />
         </div>
       </div>
-      <TableData columns={columns} data={dataset} defaultSorted={defaultSortedDataset} />
+      <TableData
+        columns={columns}
+        data={data.filter((e) => e.kataCount > 0)}
+        defaultSorted={defaultSortedDataset}
+      />
     </Container>
   );
 };

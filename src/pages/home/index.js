@@ -3,18 +3,42 @@ import { Card, Form, Button, Modal } from "react-bootstrap";
 import color from "../../utility/color";
 import cautionIMG from "../../assets/svg/error.svg";
 import safeIMG from "../../assets/svg/shield.svg";
+import { useRecoilValue } from "recoil";
+import { getSumber } from "../../state";
+import services from "../../process/service";
 
 const Home = () => {
   const [judul, setJudul] = useState("");
   const [sumber, setSumber] = useState("");
   const [sumberLainnya, setSumberLainnya] = useState("");
   const [show, setShow] = useState(false);
-  const [isClickbait, setIsClickbait] = useState(true);
+  const [isClickbait, setIsClickbait] = useState();
+  const [isProses, setIsProses] = useState(false);
 
-  const HandleClasify = (event) => {
+  const sumberBerita = useRecoilValue(getSumber);
+
+  const HandleClasify = async (event) => {
     event.preventDefault();
-    setIsClickbait(!isClickbait);
-    setShow(true);
+    if (!isProses) {
+      setIsProses(true);
+      try {
+        const detection = await services.detection({
+          title: judul,
+          sumberBerita: sumber,
+        });
+        if (detection.data.result === "Clickbait") {
+          setIsClickbait(true);
+        } else {
+          setIsClickbait(false);
+        }
+        setIsProses(false);
+        setShow(true);
+      } catch (_) {
+        setIsClickbait(false);
+        setIsProses(false);
+        setShow(true);
+      }
+    }
   };
 
   return (
@@ -61,9 +85,11 @@ const Home = () => {
                 onChange={(e) => setSumber(e.target.value)}
               >
                 <option hidden>Masukkan sumber berita</option>
-                <option value="Tribunnews.com">Tribunnews.com</option>
-                <option value="Kompas.com">Kompas.com</option>
-                <option value="Suara.com">Suara.com</option>
+                {sumberBerita.map((e, index) => (
+                  <option key={index} value={e}>
+                    {e}
+                  </option>
+                ))}
                 <option value="lainnya">Lainnya</option>
               </Form.Select>
             </Form.Group>
@@ -87,15 +113,15 @@ const Home = () => {
               type="submit"
               className="col-12 btn"
               style={{
-                color: color.white,
-                backgroundColor: color.red,
+                color: isProses ? color.red : color.white,
+                backgroundColor: isProses ? color.gray : color.red,
                 border: "none",
                 outline: 0,
                 boxShadow: "none",
               }}
               // onClick={()=>HandleClasify()}
             >
-              Klasifikasi
+              {isProses ? "Loading" : "Klasifikasi"}
             </Button>
             <Modal show={show} onHide={() => setShow(false)}>
               <Modal.Header closeButton>
@@ -113,10 +139,12 @@ const Home = () => {
                   />
                   <div className="col-md-4" />
                 </div>
-                <p style={{
-                  textAlign: "center",
-                  padding: 10
-                }}>
+                <p
+                  style={{
+                    textAlign: "center",
+                    padding: 10,
+                  }}
+                >
                   Berita dengan judul berita "{judul}" dari "
                   {sumber === "lainnya" ? sumberLainnya : sumber}" termasuk
                   kategori{" "}

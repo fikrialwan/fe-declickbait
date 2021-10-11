@@ -1,14 +1,25 @@
 import React, { Fragment } from "react";
 import CustomButton from "../../../../../component/customButton";
 import color from "../../../../../utility/color";
-import dataset, { defaultSortedDataset } from "../../../../../dummy/dataset";
+import { defaultSortedDataset } from "../../../../../dummy/dataset";
 import TableData from "../../../../../component/table";
 import EditedModal from "../../../../../component/editedModal";
+import services from "../../../../../process/service";
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import { getDatatrain } from "../../../../../state";
 
 const TableTrain = () => {
+
+  const data = useRecoilValue(getDatatrain);
+  const reload = useResetRecoilState(getDatatrain);
+
+  const handleDelete = (id) => {
+    services.deleteBerita(id).then((_) => reload());
+  };
+
   const columns = [
     {
-      dataField: "judul",
+      dataField: "judul_berita",
       text: "Judul",
       sort: true,
       headerStyle: {
@@ -18,7 +29,7 @@ const TableTrain = () => {
       },
     },
     {
-      dataField: "sumber",
+      dataField: "sumber_berita",
       text: "Sumber",
       sort: true,
       headerStyle: {
@@ -45,18 +56,19 @@ const TableTrain = () => {
         border: "none",
       },
       formatter: (_, row) => {
-        const { judul, sumber, kategoriData, label } = row;
+        const { id, judul_berita, sumber_berita, status_data, label } = row;
         return (
           <Fragment>
             <div className="mb-1">
               <EditedModal
-                judul={judul}
-                sumber={sumber}
-                typeData={kategoriData}
+                judul={judul_berita}
+                sumber={sumber_berita}
+                typeData={status_data}
                 label={label}
+                id={id}
               />
             </div>{" "}
-            <div className="mb-1">
+            <div className="mb-1" onClick={() => handleDelete(id)}>
               <CustomButton
                 title="Delete"
                 link=""
@@ -71,7 +83,7 @@ const TableTrain = () => {
   ];
   return (
     <TableData
-      data={dataset.filter((e) => e.kategoriData === "Data Train")}
+      data={data}
       columns={columns}
       defaultSorted={defaultSortedDataset}
     />
