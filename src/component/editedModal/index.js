@@ -5,6 +5,7 @@ import CustomButton from "../customButton";
 import services from "../../process/service";
 import { useResetRecoilState } from "recoil";
 import { getDataset, getDatatest, getDatatrain } from "../../state";
+import swal from "sweetalert";
 
 const EditedModal = (props) => {
   const { id, judul, sumber, typeData, label } = props;
@@ -35,8 +36,16 @@ const EditedModal = (props) => {
         setDatasetState();
         setDatatestState();
         setDatatrainState();
+        swal("Data berhasil diedit", {
+          icon: "success",
+        });
       })
-      .catch((error) => setIsError(true));
+      .catch((error) => {
+        setIsError(true);
+        swal("Data gagal diedit", {
+          icon: "warning",
+        });
+      });
   };
 
   const handleClose = () => setShow(false);

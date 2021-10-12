@@ -7,6 +7,7 @@ import EditedModal from "../../../../../component/editedModal";
 import services from "../../../../../process/service";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { getDatatrain } from "../../../../../state";
+import swal from "sweetalert";
 
 const TableTrain = () => {
 
@@ -14,7 +15,21 @@ const TableTrain = () => {
   const reload = useResetRecoilState(getDatatrain);
 
   const handleDelete = (id) => {
-    services.deleteBerita(id).then((_) => reload());
+    swal({
+      title: "Apakah anda yakin ingin menghapus semua data?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        services.deleteBerita(id).then((_) => { 
+          swal("Data berhasil dihapus", {
+            icon: "success",
+          });
+          reload(); 
+        });
+      }
+    });
   };
 
   const columns = [

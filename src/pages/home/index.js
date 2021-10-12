@@ -14,6 +14,7 @@ const Home = () => {
   const [show, setShow] = useState(false);
   const [isClickbait, setIsClickbait] = useState();
   const [isProses, setIsProses] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const sumberBerita = useRecoilValue(getSumber);
 
@@ -24,7 +25,7 @@ const Home = () => {
       try {
         const detection = await services.detection({
           title: judul,
-          sumberBerita: sumber,
+          sumberBerita: sumber === "lainnya" ? sumberLainnya : sumber,
         });
         if (detection.data.result === "Clickbait") {
           setIsClickbait(true);
@@ -36,7 +37,7 @@ const Home = () => {
       } catch (_) {
         setIsClickbait(false);
         setIsProses(false);
-        setShow(true);
+        setIsError(true);
       }
     }
   };
@@ -159,6 +160,45 @@ const Home = () => {
                     {isClickbait ? "CLickbait" : "Bukan Clickbait"}
                   </span>
                 </p>
+              </Modal.Body>
+            </Modal>
+            <Modal show={isError} onHide={() => setIsError(false)}>
+              <Modal.Body>
+                <div className="row">
+                  <div className="col-md-4" />
+                  <img
+                    src={cautionIMG}
+                    alt="img-not-found"
+                    className="p-2 col-md-4"
+                    // width="100%"
+                    // height="auto"
+                  />
+                  <div className="col-md-4" />
+                </div>
+                <p
+                  style={{
+                    textAlign: "center",
+                    padding: 10,
+                  }}
+                >
+                  Terjadi kesalahan ketika melakukan deteksi berita
+                </p>
+                <div className="row">
+                  <div className="col-md-4" />
+                  <button
+                    className="btn col-md-4"
+                    style={{
+                      boxShadow: "none",
+                      outline: 0,
+                      backgroundColor: color.red,
+                      color: color.gray,
+                    }}
+                    onClick={() => setIsError(false)}
+                  >
+                    Coba Lagi
+                  </button>
+                  <div className="col-md-4" />
+                </div>
               </Modal.Body>
             </Modal>
           </Form>

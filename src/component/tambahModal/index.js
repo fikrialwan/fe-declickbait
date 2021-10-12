@@ -5,6 +5,7 @@ import CustomButton from "../customButton";
 import services from "../../process/service";
 import { useResetRecoilState } from "recoil";
 import { getDataset, getDatatest, getDatatrain } from "../../state";
+import swal from "sweetalert";
 
 const TambahModal = () => {
   const [show, setShow] = useState(false);
@@ -35,8 +36,16 @@ const TambahModal = () => {
         setDatatrainState();
         setDatatestState();
         setDatasetState();
+        swal("Data berhasil ditambah", {
+          icon: "success",
+        });
       })
-      .catch((error) => setIsError(true));
+      .catch((error) => {
+        setIsError(true);
+        swal("Data gagal ditambah", {
+          icon: "warning",
+        });
+      });
   };
 
   const handleClose = () => {

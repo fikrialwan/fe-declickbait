@@ -14,6 +14,7 @@ import {
   useHistory,
 } from "react-router-dom";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
 import NotFound from "../notfound";
 import Dashboard from "./pagesAdmin/dashboard";
 import Dataset from "./pagesAdmin/dataset";
@@ -23,19 +24,27 @@ import Pengujian from "./pagesAdmin/pengujian";
 import "./style.css";
 
 const Admin = () => {
-  
   const history = useHistory();
 
   useEffect(() => {
     const user = localStorage.getItem("user") ?? 0;
-    if(user === 0){
-      history.push('../login');
+    if (user === 0) {
+      history.push("../login");
     }
   });
 
   const HandleLogout = () => {
-    localStorage.removeItem('user');
-    history.push("../login");
+    swal({
+      title: "Apakah anda yakin ingin logout?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        localStorage.removeItem("user");
+        history.push("../login");
+      }
+    });
   };
 
   const urlAdmin = [
@@ -106,7 +115,7 @@ const Admin = () => {
                 </li>
               ))}
               <li
-                 key={99}
+                key={99}
                 style={{
                   listStyleType: "none",
                   padding: 0,
@@ -141,7 +150,9 @@ const Admin = () => {
                   {element.route}
                 </Route>
               ) : (
-                <Route key={99} path={element.link}>{element.route}</Route>
+                <Route key={99} path={element.link}>
+                  {element.route}
+                </Route>
               )
             )}
             <Route key={100} path="/detail">

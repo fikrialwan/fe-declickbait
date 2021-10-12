@@ -5,6 +5,7 @@ import CustomButton from "../customButton";
 import services from "../../process/service";
 import { useResetRecoilState } from "recoil";
 import { getDataset, getDatatest, getDatatrain } from "../../state";
+import swal from "sweetalert";
 
 const TambahExcel = () => {
   const [show, setShow] = useState(false);
@@ -37,6 +38,9 @@ const TambahExcel = () => {
       .catch((error) => {
         setIsError(true);
         setIsProses(false);
+        swal("Data gagal ditambah", {
+          icon: "warning",
+        });
       });
   };
 

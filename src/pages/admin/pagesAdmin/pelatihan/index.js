@@ -10,6 +10,7 @@ import services from "../../../../process/service";
 import { getCommons, getDatatrain } from "../../../../state";
 import color from "../../../../utility/color";
 import loading from "../../../../assets/svg/loading.svg";
+import swal from "sweetalert";
 
 const Pelatihan = () => {
   const data = useRecoilValue(getDatatrain);
@@ -27,8 +28,14 @@ const Pelatihan = () => {
       setIsProses(false);
       resetData();
       resetCommons();
+      swal("Pelatihan data berhasil", {
+        icon: "success",
+      });
     } catch (_) {
       setIsProses(false);
+      swal("Pelatihan data gagal", {
+        icon: "warning",
+      });
     }
   };
 

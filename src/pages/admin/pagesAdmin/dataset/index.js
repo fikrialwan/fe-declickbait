@@ -13,13 +13,13 @@ import color from "../../../../utility/color";
 import services from "../../../../process/service";
 import { useResetRecoilState } from "recoil";
 import { getDataset, getDatatest, getDatatrain } from "../../../../state";
+import swal from "sweetalert";
 
 const useQuery = () => new URLSearchParams(useLocation().search);
 
 const Dataset = () => {
   const query = useQuery();
 
-  
   const setDatasetState = useResetRecoilState(getDataset);
   const setDatatrainState = useResetRecoilState(getDatatrain);
   const setDatatestState = useResetRecoilState(getDatatest);
@@ -40,12 +40,24 @@ const Dataset = () => {
   ];
 
   const handleDelete = () => {
-    services.deleteAllBerita().then((_) => {
-      setDatasetState();
-      setDatatestState();
-      setDatatrainState();
-    })
-  }
+    swal({
+      title: "Apakah anda yakin ingin menghapus semua data?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        services.deleteAllBerita().then((_) => {
+          swal("Data berhasil dihapus", {
+            icon: "success",
+          });
+          setDatasetState();
+          setDatatestState();
+          setDatatrainState();
+        });
+      }
+    });
+  };
 
   return (
     <Container>

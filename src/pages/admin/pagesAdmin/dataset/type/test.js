@@ -5,19 +5,32 @@ import { defaultSortedDataset } from "../../../../../dummy/dataset";
 import TableData from "../../../../../component/table";
 import EditedModal from "../../../../../component/editedModal";
 import services from "../../../../../process/service";
-import {useRecoilValue, useResetRecoilState } from "recoil";
-import {getDatatest } from "../../../../../state";
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import { getDatatest } from "../../../../../state";
+import swal from "sweetalert";
 
 const TableTest = () => {
-  
   const data = useRecoilValue(getDatatest);
   const reload = useResetRecoilState(getDatatest);
 
   const handleDelete = (id) => {
-    services.deleteBerita(id).then((_) => reload());
+    swal({
+      title: "Apakah anda yakin ingin menghapus semua data?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        services.deleteBerita(id).then((_) => {
+          swal("Data berhasil dihapus", {
+            icon: "success",
+          });
+          reload();
+        });
+      }
+    });
   };
 
- 
   const columns = [
     {
       dataField: "judul_berita",

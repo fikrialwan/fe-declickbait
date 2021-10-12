@@ -8,8 +8,8 @@ import cautionIMG from "../../assets/svg/error.svg";
 const Login = () => {
   const history = useHistory();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const [isError, setIsError] = useState(false);
 
@@ -18,7 +18,7 @@ const Login = () => {
   const HandleLogin = (event) => {
     event.preventDefault();
     if (!isProses) {
-      setIsProses(true)
+      setIsProses(true);
       services
         .login({ username, password })
         .then((result) => {
@@ -92,7 +92,7 @@ const Login = () => {
               }}
               onClick={(event) => HandleLogin(event)}
             >
-              { isProses ? 'Loading' :  'Login' }
+              {isProses ? "Loading" : "Login"}
             </Button>
             <Modal show={isError} onHide={() => setIsError(false)}>
               <Modal.Body>

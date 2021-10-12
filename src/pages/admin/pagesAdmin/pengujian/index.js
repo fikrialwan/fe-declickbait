@@ -10,6 +10,7 @@ import services from "../../../../process/service";
 import { getCommons, getDatatest } from "../../../../state";
 import color from "../../../../utility/color";
 import loading from "../../../../assets/svg/loading.svg";
+import swal from "sweetalert";
 
 const Pengujian = () => {
   const data = useRecoilValue(getDatatest);
@@ -27,8 +28,14 @@ const Pengujian = () => {
       setIsProses(false);
       resetData();
       resetCommons();
+      swal("Pengujian data berhasil", {
+        icon: "success",
+      });
     } catch (_) {
       setIsProses(false);
+      swal("Pengujian data gagal", {
+        icon: "warning",
+      });
     }
   };
 
