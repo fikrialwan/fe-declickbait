@@ -129,13 +129,13 @@ const Pelatihan = () => {
       <div className="row mb-2">
         <div className="col-md-4 p-2">
           <CardDashboard
-            title="Total W pada kelas Clickbait"
+            title="Total W (TF-IDF) pada kelas Clickbait"
             body={w_total_clickbait.toFixed(5)}
           />
         </div>
         <div className="col-md-4 p-2">
           <CardDashboard
-            title="Total W pada kelas bukan Clickbait"
+            title="Total W (TF-IDF) pada kelas bukan Clickbait"
             body={w_total_not_clickbait.toFixed(5)}
           />
         </div>
