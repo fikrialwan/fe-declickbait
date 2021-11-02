@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, Form, Button, Modal } from "react-bootstrap";
 import { useHistory } from "react-router";
 import color from "../../utility/color";
+import background from "../../utility/background";
 import services from "../../process/service";
 import cautionIMG from "../../assets/svg/error.svg";
 
@@ -37,7 +38,7 @@ const Login = () => {
   return (
     <div
       className="body-center"
-      style={{ backgroundColor: color.gray, padding: 10 }}
+      style={{ background, padding: 10 }}
     >
       <Card
         className="center rounded-3 shadow-sm col-lg-6 col-md-8 col-sm-12 col-12 "

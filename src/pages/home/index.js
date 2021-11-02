@@ -3,6 +3,7 @@ import { Card, Form, Button, Modal } from "react-bootstrap";
 import color from "../../utility/color";
 import cautionIMG from "../../assets/svg/error.svg";
 import safeIMG from "../../assets/svg/shield.svg";
+import background from "../../utility/background";
 import { useRecoilValue } from "recoil";
 import { getSumber } from "../../state";
 import services from "../../process/service";
@@ -13,8 +14,11 @@ const Home = () => {
   const [sumberLainnya, setSumberLainnya] = useState("");
   const [show, setShow] = useState(false);
   const [isClickbait, setIsClickbait] = useState();
+  const [valueClickbait, setValueClickbait] = useState();
+  const [valueNotClickbait, setValueNotClickbait] = useState();
   const [isProses, setIsProses] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("Terjadi kesalahan ketika melakukan deteksi berita");
 
   const sumberBerita = useRecoilValue(getSumber);
 
@@ -23,15 +27,27 @@ const Home = () => {
     if (!isProses) {
       setIsProses(true);
       try {
+        if (judul === "" || sumber === "" || (sumber === "lainnya" && sumberLainnya === "")) {
+          if (judul === "" && (sumber === "" || (sumber === "lainnya" && sumberLainnya === ""))) {
+            setError("Terjadi kesalahan, judul berita dan sumber berita masih kosong");
+          } else if (judul === "") {
+            setError("Terjadi kesalahan, judul berita masih kosong");
+          } else {
+            setError("Terjadi kesalahan, dan sumber berita masih kosong");
+          }
+          throw new Error("error");
+        }
         const detection = await services.detection({
           title: judul,
           sumberBerita: sumber === "lainnya" ? sumberLainnya : sumber,
         });
-        if (detection.data.result === "Clickbait") {
+        if (detection.data.result.result === "Clickbait") {
           setIsClickbait(true);
         } else {
           setIsClickbait(false);
         }
+        setValueClickbait(detection.data.result.valueClickbait);
+        setValueNotClickbait(detection.data.result.valueNotClickbait);
         setIsProses(false);
         setShow(true);
       } catch (_) {
@@ -45,7 +61,10 @@ const Home = () => {
   return (
     <div
       className="body-center"
-      style={{ backgroundColor: color.gray, padding: 10 }}
+      style={{
+        background,
+        padding: 10,
+      }}
     >
       <Card
         className="center rounded-3 shadow-sm col-lg-6 col-md-8 col-sm-12 col-12 "
@@ -159,6 +178,13 @@ const Home = () => {
                   >
                     {isClickbait ? "CLickbait" : "Bukan Clickbait"}
                   </span>
+                  <br />
+                  Karena nilai hasil multinomial naive bayes pada kelas{" "}
+                  <span style={{color: color.red}}>{isClickbait ? "CLickbait" : "Bukan Clickbait"}</span> bernilai{" "}
+                  <span style={{color: color.red}}>{isClickbait ? valueClickbait : valueNotClickbait}</span> lebih besar
+                  dari pada hasil multinomial naive bayes pada kelas{" "}
+                  <span style={{color: color.red}}>{!isClickbait ? "CLickbait" : "Bukan Clickbait"}</span> yang bernilai{" "}
+                  <span style={{color: color.red}}>{!isClickbait ? valueClickbait : valueNotClickbait}</span>
                 </p>
               </Modal.Body>
             </Modal>
@@ -181,7 +207,7 @@ const Home = () => {
                     padding: 10,
                   }}
                 >
-                  Terjadi kesalahan ketika melakukan deteksi berita
+                  {error}
                 </p>
                 <div className="row">
                   <div className="col-md-4" />
