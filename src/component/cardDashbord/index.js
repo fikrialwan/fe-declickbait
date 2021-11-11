@@ -26,7 +26,7 @@ const CardDashboard = (props) => {
       </Card.Title>
       <Card.Body
         style={{
-          fontSize: 50,
+          fontSize: 32,
           fontWeight: 600,
         }}
         className="m-1"

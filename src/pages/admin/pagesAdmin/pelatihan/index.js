@@ -130,17 +130,17 @@ const Pelatihan = () => {
         <div className="col-md-4 p-2">
           <CardDashboard
             title="Total W (TF-IDF) pada kelas Clickbait"
-            body={w_total_clickbait.toFixed(5)}
+            body={w_total_clickbait.toFixed(3)}
           />
         </div>
         <div className="col-md-4 p-2">
           <CardDashboard
             title="Total W (TF-IDF) pada kelas bukan Clickbait"
-            body={w_total_not_clickbait.toFixed(5)}
+            body={w_total_not_clickbait.toFixed(3)}
           />
         </div>
         <div className="col-md-4 p-2">
-          <CardDashboard title="Total IDF" body={w_unik.toFixed(5)} />
+          <CardDashboard title="Total IDF" body={w_unik.toFixed(3)} />
         </div>
       </div>
       <TableData
