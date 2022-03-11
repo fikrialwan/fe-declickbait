@@ -20,7 +20,7 @@ const getBeritaByType = (type) => {
     return http.get(`/berita?type=${type}`);
 }
 
-const getTotal = (type) => (type) ? http.get(`/totalBerita?type${type}`) : http.get('/totalBerita');
+const getTotal = (type) => (type) ? http.get(`/totalBerita?type=${type}`) : http.get('/totalBerita');
 
 const getSumber = () => http.get('/sumberBerita');
 

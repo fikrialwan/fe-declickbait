@@ -77,7 +77,7 @@ const getTotal = selector({
 });
 
 const getTotalTrain = selector({
-  key: "getTotal",
+  key: "getTotalTrain",
   get: async () => {
     const total = await services.getTotal("train");
     return total.data.data;
@@ -85,7 +85,7 @@ const getTotalTrain = selector({
 });
 
 const getTotalTest = selector({
-  key: "getTotal",
+  key: "getTotalTest",
   get: async () => {
     const total = await services.getTotal("test");
     return total.data.data;

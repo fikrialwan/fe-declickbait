@@ -13,7 +13,7 @@ const TambahExcel = () => {
   const [isProses, setIsProses] = useState(false);
 
   const [dataFile, setDataFile] = useState();
-  const [sumberBerita, setSumberBerita] = useState("");
+  // const [sumberBerita, setSumberBerita] = useState("");
   const idAdmin = localStorage.getItem("user") ?? 0;
 
   const setDatasetState = useResetRecoilState(getDataset);
@@ -24,7 +24,7 @@ const TambahExcel = () => {
     setIsProses(true);
     const data = new FormData();
     data.append("data", dataFile);
-    data.append("sumberBerita", sumberBerita);
+    // data.append("sumberBerita", sumberBerita);
     data.append("idAdmin", idAdmin);
     await services
       .postBeritaExcel(data)
@@ -85,7 +85,7 @@ const TambahExcel = () => {
                 }}
               />
             </Form.Group>
-            <Form.Group className="mb-3">
+            {/* <Form.Group className="mb-3">
               <Form.Control
                 placeholder="Sumber"
                 style={{
@@ -96,7 +96,7 @@ const TambahExcel = () => {
                 }}
                 onChange={(value) => setSumberBerita(value.target.value)}
               />
-            </Form.Group>
+            </Form.Group> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>
