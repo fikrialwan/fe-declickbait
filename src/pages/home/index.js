@@ -24,6 +24,7 @@ const Home = () => {
 
   const HandleClasify = async (event) => {
     event.preventDefault();
+    const mulai = performance.now();
     if (!isProses) {
       setIsProses(true);
       try {
@@ -50,10 +51,14 @@ const Home = () => {
         setValueNotClickbait(detection.data.result.valueNotClickbait);
         setIsProses(false);
         setShow(true);
+        const selesai = performance.now();
+        console.log(`waktu proses : ${selesai - mulai} miliseconds`);
       } catch (_) {
         setIsClickbait(false);
         setIsProses(false);
         setIsError(true);
+        const selesai = performance.now();
+        console.log(`waktu proses : ${selesai - mulai} miliseconds`);
       }
     }
   };
@@ -139,7 +144,7 @@ const Home = () => {
                 outline: 0,
                 boxShadow: "none",
               }}
-              // onClick={()=>HandleClasify()}
+            // onClick={()=>HandleClasify()}
             >
               {isProses ? "Loading" : "Klasifikasi"}
             </Button>
@@ -154,8 +159,8 @@ const Home = () => {
                     src={isClickbait ? cautionIMG : safeIMG}
                     alt="img-not-found"
                     className="p-2 col-md-4"
-                    // width="100%"
-                    // height="auto"
+                  // width="100%"
+                  // height="auto"
                   />
                   <div className="col-md-4" />
                 </div>
@@ -180,11 +185,11 @@ const Home = () => {
                   </span>
                   <br />
                   Karena nilai hasil multinomial naive bayes pada kelas{" "}
-                  <span style={{color: color.red}}>{isClickbait ? "CLickbait" : "Bukan Clickbait"}</span> bernilai{" "}
-                  <span style={{color: color.red}}>{isClickbait ? valueClickbait : valueNotClickbait}</span> lebih besar
+                  <span style={{ color: color.red }}>{isClickbait ? "CLickbait" : "Bukan Clickbait"}</span> bernilai{" "}
+                  <span style={{ color: color.red }}>{isClickbait ? valueClickbait : valueNotClickbait}</span> lebih besar
                   dari pada hasil multinomial naive bayes pada kelas{" "}
-                  <span style={{color: color.red}}>{!isClickbait ? "CLickbait" : "Bukan Clickbait"}</span> yang bernilai{" "}
-                  <span style={{color: color.red}}>{!isClickbait ? valueClickbait : valueNotClickbait}</span>
+                  <span style={{ color: color.red }}>{!isClickbait ? "CLickbait" : "Bukan Clickbait"}</span> yang bernilai{" "}
+                  <span style={{ color: color.red }}>{!isClickbait ? valueClickbait : valueNotClickbait}</span>
                 </p>
               </Modal.Body>
             </Modal>
@@ -196,8 +201,8 @@ const Home = () => {
                     src={cautionIMG}
                     alt="img-not-found"
                     className="p-2 col-md-4"
-                    // width="100%"
-                    // height="auto"
+                  // width="100%"
+                  // height="auto"
                   />
                   <div className="col-md-4" />
                 </div>
