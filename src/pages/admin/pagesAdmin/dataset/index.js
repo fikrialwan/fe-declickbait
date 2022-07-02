@@ -74,7 +74,7 @@ const Dataset = () => {
           <CustomButton
             title="Delete All Berita"
             textColor={color.gray}
-            bgColor={color.red}
+            bgColor={color["blue-light"]}
           />
         </div>
       </div>

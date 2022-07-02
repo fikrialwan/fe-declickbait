@@ -39,7 +39,7 @@ const TableAll = () => {
       text: "Judul",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -49,7 +49,7 @@ const TableAll = () => {
       text: "Sumber",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -58,7 +58,7 @@ const TableAll = () => {
       dataField: "status_data",
       text: "Kategori Data",
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -67,7 +67,7 @@ const TableAll = () => {
       dataField: "label",
       text: "Label",
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -76,7 +76,7 @@ const TableAll = () => {
       dataField: "id",
       text: "Action",
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },

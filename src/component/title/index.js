@@ -8,7 +8,7 @@ const Title = (props) => {
         <h1
           style={{
             fontSize: 20,
-            color: color.red,
+            color: color["blue-navy"],
           }}
         >
           {props.title}

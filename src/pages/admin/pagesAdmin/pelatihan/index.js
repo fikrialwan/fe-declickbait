@@ -11,6 +11,7 @@ import { getCommons, getDatatrain } from "../../../../state";
 import color from "../../../../utility/color";
 import loading from "../../../../assets/svg/loading.svg";
 import swal from "sweetalert";
+import timeConvert from "../../../../process/timeConvert";
 
 const Pelatihan = () => {
   const data = useRecoilValue(getDatatrain);
@@ -22,6 +23,7 @@ const Pelatihan = () => {
     useRecoilValue(getCommons);
 
   const trainProses = async () => {
+    const mulai = performance.now();
     setIsProses(true);
     try {
       await services.train();
@@ -31,11 +33,15 @@ const Pelatihan = () => {
       swal("Pelatihan data berhasil", {
         icon: "success",
       });
+      const selesai = performance.now();
+      console.log(`waktu pelatihan : ${timeConvert(selesai - mulai)}`);
     } catch (_) {
       setIsProses(false);
       swal("Pelatihan data gagal", {
         icon: "warning",
       });
+      const selesai = performance.now();
+      console.log(`waktu pelatihan : ${timeConvert(selesai - mulai)}`);
     }
   };
 
@@ -45,7 +51,7 @@ const Pelatihan = () => {
       text: "Judul",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -55,7 +61,7 @@ const Pelatihan = () => {
       text: "Sumber",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -64,7 +70,7 @@ const Pelatihan = () => {
       dataField: "id",
       text: "Action",
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -75,7 +81,7 @@ const Pelatihan = () => {
             <CustomButton
               title="Detail"
               textColor={color.gray}
-              bgColor={color.red}
+              bgColor={color["blue-light"]}
               isLink={true}
               link={`/detail?beritaid=${id}`}
             />
@@ -94,8 +100,8 @@ const Pelatihan = () => {
       >
         <CustomButton
           title={isProses ? "Proses..." : "Mulai Pelatihan"}
-          bgColor={isProses ? color.white : color.red}
-          textColor={isProses ? color.red : color.gray}
+          bgColor={isProses ? color.white : color["blue-light"]}
+          textColor={isProses ? color["blue-light"] : color.gray}
         />
       </div>
       <Modal
@@ -126,7 +132,7 @@ const Pelatihan = () => {
           </p>
         </Modal.Body>
       </Modal>
-      <div className="row mb-2">
+      {/* <div className="row mb-2">
         <div className="col-md-4 p-2">
           <CardDashboard
             title="Total W (TF-IDF) pada kelas Clickbait"
@@ -142,7 +148,7 @@ const Pelatihan = () => {
         <div className="col-md-4 p-2">
           <CardDashboard title="Total IDF" body={w_unik.toFixed(3)} />
         </div>
-      </div>
+      </div> */}
       <TableData
         columns={columns}
         data={data.filter((e) => e.kataCount > 0)}

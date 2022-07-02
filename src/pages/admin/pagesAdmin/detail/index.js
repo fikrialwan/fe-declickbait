@@ -34,7 +34,7 @@ const Detail = () => {
       text: "Kata",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -44,7 +44,7 @@ const Detail = () => {
       text: "TF",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -54,7 +54,7 @@ const Detail = () => {
       text: "IDF Clickbait",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -64,7 +64,7 @@ const Detail = () => {
       text: "IDF Bukan Clickbait",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -74,7 +74,7 @@ const Detail = () => {
       text: "IDF",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },

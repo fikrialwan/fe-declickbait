@@ -15,9 +15,9 @@ const TypeButton = (props) => {
           boxShadow: "none",
           outline: 0,
           backgroundColor:
-            (param ?? "all") === title.toLowerCase() ? color.red : color.white,
+            (param ?? "all") === title.toLowerCase() ? color["blue-light"] : color.white,
           color:
-            (param ?? "all") === title.toLowerCase() ? color.white : color.red,
+            (param ?? "all") === title.toLowerCase() ? color.white : color["blue-light"],
         }}
       >
         {title}

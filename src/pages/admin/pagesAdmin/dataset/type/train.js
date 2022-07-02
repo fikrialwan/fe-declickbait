@@ -38,7 +38,7 @@ const TableTrain = () => {
       text: "Judul",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -48,7 +48,7 @@ const TableTrain = () => {
       text: "Sumber",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -57,7 +57,7 @@ const TableTrain = () => {
       dataField: "label",
       text: "Label",
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -66,7 +66,7 @@ const TableTrain = () => {
       dataField: "id",
       text: "Action",
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },

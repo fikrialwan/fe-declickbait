@@ -71,170 +71,172 @@ const Home = () => {
         padding: 10,
       }}
     >
-      <Card
-        className="center rounded-3 shadow-sm col-lg-6 col-md-8 col-sm-12 col-12 "
-        style={{
-          backgroundColor: color.white,
-          color: color.black,
-          border: "none",
-          paddingTop: 30,
-          paddingBottom: 20,
-          paddingLeft: 20,
-          paddingRight: 20,
-        }}
-      >
-        <Card.Title>Klasifikasi Berita Clickbait</Card.Title>
-        <Card.Body>
-          <Form onSubmit={(e) => HandleClasify(e)}>
-            <Form.Group className="mb-3">
-              <Form.Control
-                placeholder="Masukkan judul berita"
-                style={{
-                  borderColor: color.black,
-                  opacity: 0.5,
-                  outline: 0,
-                  boxShadow: "none",
-                }}
-                onChange={(e) => setJudul(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Select
-                className="mb-3"
-                style={{
-                  borderColor: color.black,
-                  opacity: 0.5,
-                  outline: 0,
-                  boxShadow: "none",
-                }}
-                onChange={(e) => setSumber(e.target.value)}
-              >
-                <option hidden>Masukkan sumber berita</option>
-                {sumberBerita.map((e, index) => (
-                  <option key={index} value={e}>
-                    {e}
-                  </option>
-                ))}
-                <option value="lainnya">Lainnya</option>
-              </Form.Select>
-            </Form.Group>
-            {sumber === "lainnya" ? (
+      <div className="col-lg-6 col-md-8 col-sm-12 col-12 card-custom">
+        <Card
+          className="center rounded-3 shadow-sm"
+          style={{
+            backgroundColor: color.white,
+            color: color.black,
+            border: "none",
+            paddingTop: 30,
+            paddingBottom: 20,
+            paddingLeft: 20,
+            paddingRight: 20,
+          }}
+        >
+          <Card.Title>Klasifikasi Berita Clickbait</Card.Title>
+          <Card.Body>
+            <Form onSubmit={(e) => HandleClasify(e)}>
               <Form.Group className="mb-3">
                 <Form.Control
-                  placeholder="Masukkan sumber berita"
+                  placeholder="Masukkan judul berita"
                   style={{
                     borderColor: color.black,
                     opacity: 0.5,
                     outline: 0,
                     boxShadow: "none",
                   }}
-                  onChange={(e) => setSumberLainnya(e.target.value)}
+                  onChange={(e) => setJudul(e.target.value)}
                 />
               </Form.Group>
-            ) : (
-              <div />
-            )}
-            <Button
-              type="submit"
-              className="col-12 btn"
-              style={{
-                color: isProses ? color.red : color.white,
-                backgroundColor: isProses ? color.gray : color.red,
-                border: "none",
-                outline: 0,
-                boxShadow: "none",
-              }}
-            // onClick={()=>HandleClasify()}
-            >
-              {isProses ? "Loading" : "Klasifikasi"}
-            </Button>
-            <Modal show={show} onHide={() => setShow(false)}>
-              <Modal.Header closeButton>
-                <Modal.Title>Hasil Klasifikasi</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <div className="row">
-                  <div className="col-md-4" />
-                  <img
-                    src={isClickbait ? cautionIMG : safeIMG}
-                    alt="img-not-found"
-                    className="p-2 col-md-4"
-                  // width="100%"
-                  // height="auto"
-                  />
-                  <div className="col-md-4" />
-                </div>
-                <p
+              <Form.Group>
+                <Form.Select
+                  className="mb-3"
                   style={{
-                    textAlign: "center",
-                    padding: 10,
+                    borderColor: color.black,
+                    opacity: 0.5,
+                    outline: 0,
+                    boxShadow: "none",
                   }}
+                  onChange={(e) => setSumber(e.target.value)}
                 >
-                  Berita dengan judul berita "{judul}" dari "
-                  {sumber === "lainnya" ? sumberLainnya : sumber}" termasuk
-                  kategori{" "}
-                  <span
-                    className="btn"
+                  <option hidden>Masukkan sumber berita</option>
+                  {sumberBerita.map((e, index) => (
+                    <option key={index} value={e}>
+                      {e}
+                    </option>
+                  ))}
+                  <option value="lainnya">Lainnya</option>
+                </Form.Select>
+              </Form.Group>
+              {sumber === "lainnya" ? (
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    placeholder="Masukkan sumber berita"
                     style={{
-                      cursor: "none",
-                      color: isClickbait ? color.gray : color.black,
-                      backgroundColor: isClickbait ? color.red : color.blue,
+                      borderColor: color.black,
+                      opacity: 0.5,
+                      outline: 0,
+                      boxShadow: "none",
+                    }}
+                    onChange={(e) => setSumberLainnya(e.target.value)}
+                  />
+                </Form.Group>
+              ) : (
+                <div />
+              )}
+              <Button
+                type="submit"
+                className="col-12 btn"
+                style={{
+                  color: isProses ? color["blue-navy"] : color.white,
+                  backgroundColor: isProses ? color.gray : color["blue-navy"],
+                  border: "none",
+                  outline: 0,
+                  boxShadow: "none",
+                }}
+              // onClick={()=>HandleClasify()}
+              >
+                {isProses ? "Loading" : "Klasifikasi"}
+              </Button>
+              <Modal show={show} onHide={() => setShow(false)}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Hasil Klasifikasi</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div className="row">
+                    <div className="col-md-4" />
+                    <img
+                      src={isClickbait ? cautionIMG : safeIMG}
+                      alt="img-not-found"
+                      className="p-2 col-md-4"
+                    // width="100%"
+                    // height="auto"
+                    />
+                    <div className="col-md-4" />
+                  </div>
+                  <p
+                    style={{
+                      textAlign: "center",
+                      padding: 10,
                     }}
                   >
-                    {isClickbait ? "CLickbait" : "Bukan Clickbait"}
-                  </span>
-                  <br />
+                    Berita dengan judul berita "{judul}" dari "
+                    {sumber === "lainnya" ? sumberLainnya : sumber}" termasuk
+                    kategori{" "}
+                    <span
+                      className="btn"
+                      style={{
+                        cursor: "none",
+                        color: isClickbait ? color.gray : color.black,
+                        backgroundColor: isClickbait ? color.red : color.blue,
+                      }}
+                    >
+                      {isClickbait ? "CLickbait" : "Bukan Clickbait"}
+                    </span>
+                    {/* <br />
                   Karena nilai hasil multinomial naive bayes pada kelas{" "}
                   <span style={{ color: color.red }}>{isClickbait ? "CLickbait" : "Bukan Clickbait"}</span> bernilai{" "}
                   <span style={{ color: color.red }}>{isClickbait ? valueClickbait : valueNotClickbait}</span> lebih besar
                   dari pada hasil multinomial naive bayes pada kelas{" "}
                   <span style={{ color: color.red }}>{!isClickbait ? "CLickbait" : "Bukan Clickbait"}</span> yang bernilai{" "}
-                  <span style={{ color: color.red }}>{!isClickbait ? valueClickbait : valueNotClickbait}</span>
-                </p>
-              </Modal.Body>
-            </Modal>
-            <Modal show={isError} onHide={() => setIsError(false)}>
-              <Modal.Body>
-                <div className="row">
-                  <div className="col-md-4" />
-                  <img
-                    src={cautionIMG}
-                    alt="img-not-found"
-                    className="p-2 col-md-4"
-                  // width="100%"
-                  // height="auto"
-                  />
-                  <div className="col-md-4" />
-                </div>
-                <p
-                  style={{
-                    textAlign: "center",
-                    padding: 10,
-                  }}
-                >
-                  {error}
-                </p>
-                <div className="row">
-                  <div className="col-md-4" />
-                  <button
-                    className="btn col-md-4"
+                  <span style={{ color: color.red }}>{!isClickbait ? valueClickbait : valueNotClickbait}</span> */}
+                  </p>
+                </Modal.Body>
+              </Modal>
+              <Modal show={isError} onHide={() => setIsError(false)}>
+                <Modal.Body>
+                  <div className="row">
+                    <div className="col-md-4" />
+                    <img
+                      src={cautionIMG}
+                      alt="img-not-found"
+                      className="p-2 col-md-4"
+                    // width="100%"
+                    // height="auto"
+                    />
+                    <div className="col-md-4" />
+                  </div>
+                  <p
                     style={{
-                      boxShadow: "none",
-                      outline: 0,
-                      backgroundColor: color.red,
-                      color: color.gray,
+                      textAlign: "center",
+                      padding: 10,
                     }}
-                    onClick={() => setIsError(false)}
                   >
-                    Coba Lagi
-                  </button>
-                  <div className="col-md-4" />
-                </div>
-              </Modal.Body>
-            </Modal>
-          </Form>
-        </Card.Body>
-      </Card>
+                    {error}
+                  </p>
+                  <div className="row">
+                    <div className="col-md-4" />
+                    <button
+                      className="btn col-md-4"
+                      style={{
+                        boxShadow: "none",
+                        outline: 0,
+                        backgroundColor: color.red,
+                        color: color.gray,
+                      }}
+                      onClick={() => setIsError(false)}
+                    >
+                      Coba Lagi
+                    </button>
+                    <div className="col-md-4" />
+                  </div>
+                </Modal.Body>
+              </Modal>
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
     </div>
   );
 };

@@ -58,7 +58,7 @@ const TambahModal = () => {
       <div onClick={() => handleShow()}>
         <CustomButton
           title="Tambah Data"
-          bgColor={color.red}
+          bgColor={color["blue-light"]}
           textColor={color.gray}
         />
       </div>
@@ -136,7 +136,7 @@ const TambahModal = () => {
           <div onClick={handleAddBerita}>
             <CustomButton
               title="Tambah"
-              bgColor={color.red}
+              bgColor={color["blue-light"]}
               textColor={color.gray}
               className="col-md-12"
             />

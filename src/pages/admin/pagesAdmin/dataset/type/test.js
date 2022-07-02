@@ -37,7 +37,7 @@ const TableTest = () => {
       text: "Judul",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -47,7 +47,7 @@ const TableTest = () => {
       text: "Sumber",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -56,7 +56,7 @@ const TableTest = () => {
       dataField: "label",
       text: "Label",
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -65,7 +65,7 @@ const TableTest = () => {
       dataField: "id",
       text: "Action",
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },

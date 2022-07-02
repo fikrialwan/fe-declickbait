@@ -54,7 +54,7 @@ const TambahExcel = () => {
       <div onClick={() => handleShow()}>
         <CustomButton
           title="Tambah Data With Excel"
-          bgColor={color.red}
+          bgColor={color["blue-light"]}
           textColor={color.gray}
         />
       </div>
@@ -103,7 +103,7 @@ const TambahExcel = () => {
           <div onClick={handleAddBerita}>
             <CustomButton
               title={isProses ? "Loading..." : "Tambah"}
-              bgColor={isProses ? "#808080" : color.red}
+              bgColor={isProses ? "#808080" : color["blue-light"]}
               textColor={color.gray}
               className="col-md-12"
             />

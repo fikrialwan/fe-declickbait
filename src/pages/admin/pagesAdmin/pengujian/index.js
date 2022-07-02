@@ -11,6 +11,7 @@ import { getCommons, getDatatest } from "../../../../state";
 import color from "../../../../utility/color";
 import loading from "../../../../assets/svg/loading.svg";
 import swal from "sweetalert";
+import timeConvert from "../../../../process/timeConvert";
 
 const Pengujian = () => {
   const data = useRecoilValue(getDatatest);
@@ -22,6 +23,7 @@ const Pengujian = () => {
 
 
   const testProses = async () => {
+    const mulai = performance.now();
     setIsProses(true);
     try {
       await services.test();
@@ -31,11 +33,15 @@ const Pengujian = () => {
       swal("Pengujian data berhasil", {
         icon: "success",
       });
+      const selesai = performance.now();
+      console.log(`waktu pelatihan : ${timeConvert(selesai - mulai)}`);
     } catch (_) {
       setIsProses(false);
       swal("Pengujian data gagal", {
         icon: "warning",
       });
+      const selesai = performance.now();
+      console.log(`waktu pelatihan : ${timeConvert(selesai - mulai)}`);
     }
   };
 
@@ -45,7 +51,7 @@ const Pengujian = () => {
       text: "Judul",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -55,7 +61,7 @@ const Pengujian = () => {
       text: "Sumber",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -65,7 +71,7 @@ const Pengujian = () => {
       text: "Label",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -75,7 +81,7 @@ const Pengujian = () => {
       text: "Hasil Klasifikasi",
       sort: true,
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -84,7 +90,7 @@ const Pengujian = () => {
       dataField: "id",
       text: "Action",
       headerStyle: {
-        backgroundColor: color.red,
+        backgroundColor: color["blue-navy"],
         color: color.gray,
         border: "none",
       },
@@ -95,7 +101,7 @@ const Pengujian = () => {
             <CustomButton
               title="Detail"
               textColor={color.gray}
-              bgColor={color.red}
+              bgColor={color["blue-light"]}
               isLink={true}
               link={`/detail?beritaid=${id}`}
             />
@@ -114,8 +120,8 @@ const Pengujian = () => {
       >
         <CustomButton
           title={ isProses ? "Proses..." : "Mulai Pengujian"}
-          bgColor={isProses ? color.white : color.red}
-          textColor={isProses ? color.red : color.gray}
+          bgColor={isProses ? color.white : color["blue-light"]}
+          textColor={isProses ? color["blue-light"] : color.gray}
         />
       </div>
       <Modal
